@@ -2,26 +2,34 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.1.7.
 
-## Development server
+## Тестовое задание
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Необходимо создать страницу, на которой в режиме реального времени(периодичность опроса источника 10 сек), будет выводиться текущий курс Евро по отношению к российскому рублю.
+ 
+1. Источники для получения курса:
+https://www.cbr-xml-daily.ru/daily_utf8.xml
+и
+https://www.cbr-xml-daily.ru/daily_json.js
+ 
+предполагается, что список может быть расширен.
+ 
+2. Должен быть задан порядок опроса источников.
+3. В случае, если источник недоступен, необходимо переключиться на прием данных с другого источника.
+4. Добавление нового источника должно быть простым, без необходимости переписывать большую часть кода.
+5. Необходимо продемонстрировать понимание основных принципов ООП.
+ 
+Приветствуется использование Angular.
 
-## Code scaffolding
+## Решение
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+* За вывод курса евро к рублю отвечает компонент Exchange
+* За получение данных о курсе отвечает сервис ExchangePolling
+* Каждый источник данных представляет из себя класс, реализующий интерфейс IExchangePoll
+* Получаемые данные хранятся в классе ExchangeData
+* Сам опрос осуществляется с помощью подписки async pipe на Observable<ExchangeData>, возвращаемого сервисом ExchangePolling
+* Observable сначала ожидает тика таймера, затем начинает проход по всем источникам, беря первый, который возвращает OK
 
-## Build
+## Что ещё можно улучшить
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+* Предусмотреть сценарий недоступности всех источников сразу и отображения курса валюты в этот момент
+* Объединить запрос получения статуса источника с запросом курса валюты
