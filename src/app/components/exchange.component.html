@@ -1,0 +1,25 @@
+<div class="exchange-rate" *ngIf="exchangeData | async as exchange">
+  <div class="exchange-container">
+
+    <h1>Курс € к ₽</h1>
+
+    <h2 class="rate">
+      {{ exchange.GetExchange() }}
+    </h2>
+
+    <div class="refresh-date">
+      обновлено: {{ exchange.GetRefreshDate()
+        .toLocaleString( 'ru', {
+          year: 'numeric',
+          month: 'long',
+          day: 'numeric',
+          weekday: 'long',
+          timezone: 'UTC',
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric'
+        }) }}
+    </div>
+
+  </div>
+</div>

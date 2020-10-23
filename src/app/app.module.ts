@@ -2,17 +2,20 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { ExchangeRateComponent } from './exchange-rate/exchange-rate.component';
+import { ExchangeComponent } from './components/exchange.component';
+import { HttpClientModule } from "@angular/common/http";
+import { ExchangePollingService } from "./services/exchange-polling.service";
 
 @NgModule({
   declarations: [
     AppComponent,
-    ExchangeRateComponent
+    ExchangeComponent
   ],
   imports: [
-    BrowserModule
+    BrowserModule,
+    HttpClientModule
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [ ExchangePollingService ],
+  bootstrap: [ AppComponent ]
 })
 export class AppModule { }
